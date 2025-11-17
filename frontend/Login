@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GuardianPet</title>
+  <link rel="stylesheet" href="pet2.css">
+</head>
+<body>
+  <div class="wrapper" id="wrapper">
+    
+    <div class="form-container login" id="loginForm">
+      <h2>Entrar</h2>
+      <form>
+        <input type="email" placeholder="Email" required>
+        <input type="password" placeholder="Senha" required>
+        <div class="forgot-password" tabindex="0">Esqueceu a senha?</div>
+        <button type="submit" class="submit-btn">Entrar</button>
+      </form>
+    </div>
+
+    <div class="form-container register" id="registerForm" style="display: none;">
+      <h2>Cadastro</h2>
+      <form>
+        <input type="text" placeholder="Nome Completo" required>
+        <input type="email" placeholder="Email" required>
+        <input type="password" placeholder="Senha" required>
+        <input type="password" placeholder="Confirmar senha" required>
+        <button type="submit" class="submit-btn">Cadastrar</button>
+      </form>
+    </div>
+
+    <div class="toggle-container">
+      <h2 id="toggleheading">Não possui uma conta?</h2>
+      <p id="toggletext">Cadastre-se agora!</p>
+      <button class="submit-btn" id="toggleBtn">Cadastrar</button>
+    </div>
+   </div>
+
+  <script src="petJ.js"></script>
+</body>
+</html>
