@@ -1,0 +1,134 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #00aeff, #02ff02b2);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrapper {
+    width: 90%;
+    max-width: 900px;
+    background: #ffffffdd;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.form-container {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.15);
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+form input,
+.select-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 0 8px rgba(0,0,0,0.15);
+    font-size: 16px;
+    outline: none;
+}
+
+.select-input {
+    cursor: pointer;
+    appearance: none;
+}
+
+.select-input:focus {
+    box-shadow: 0 0 12px rgba(0, 174, 255, 0.8);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background: #00aeff;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    font-size: 17px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.submit-btn:hover {
+    background: #008cd1;
+}
+
+.toggle-container {
+    padding: 20px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.15);
+    text-align: center;
+}
+
+#listaPets {
+    list-style: none;
+    padding: 0;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    padding: 15px;
+}
+
+#listaPets li {
+    background: #f6f6f6;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sexo-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+.sexo-container label {
+    font-size: 15px;
+    color: #0019a8;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.sexo-container .select-input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 0 8px rgba(0,0,0,0.15);
+    font-size: 16px;
+    outline: none;
+    cursor: pointer;
+}
+
+.sexo-container .select-input:focus {
+    box-shadow: 0 0 12px rgba(0, 174, 255, 0.8);
+}
