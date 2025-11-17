@@ -32,4 +32,3 @@ Este repositório contém o **FrontEnd** do sistema de rastreio de pets perdidos
 - Sistema de compra de produtos
 - lista de compras
 - Remover items da lista de compras
-- 
