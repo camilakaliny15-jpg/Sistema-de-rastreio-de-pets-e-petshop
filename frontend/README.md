@@ -25,4 +25,11 @@ Este repositório contém o **FrontEnd** do sistema de rastreio de pets perdidos
 - Cadastro de novos pets  
 - Listagem de pets por usuário  
 - Edição dos dados do pet  
-- Exclusão de pet  
+- Exclusão de pet
+
+### 🛒 Compras
+
+- Sistema de compra de produtos
+- lista de compras
+- Remover items da lista de compras
+- 
