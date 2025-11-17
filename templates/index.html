@@ -2,155 +2,129 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>CRUD Usuários e Pets</title>
+    <title>Pets Perdidos</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 20px;
-            max-width: 400px;
-        }
-
-        input, button {
-            margin: 5px 0;
-            padding: 8px;
-            font-size: 16px;
-        }
-
-        table {
-            border-collapse: collapse;
-            margin-top: 20px;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        table, th, td {
-            border: 1px solid #000;
-            padding: 8px;
-            text-align: left;
-        }
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        form { display: flex; flex-direction: column; margin-bottom: 20px; max-width: 400px; }
+        input, button { margin: 5px 0; padding: 8px; font-size: 16px; }
+        table { border-collapse: collapse; margin-top: 20px; width: 100%; max-width: 600px; }
+        table, th, td { border: 1px solid #000; padding: 8px; text-align: left; }
     </style>
 </head>
 <body>
-    <h1>Cadastro de Usuário</h1>
-    <form id="formUsuario">
-        <input type="text" id="nomeUsuario" placeholder="Nome" required>
-        <input type="email" id="emailUsuario" placeholder="Email" required>
-        <input type="password" id="senhaUsuario" placeholder="Senha" required>
-        <button type="submit">Cadastrar Usuário</button>
-    </form>
-    <div id="mensagemUsuario"></div>
 
-    <h2>Usuários Cadastrados</h2>
-    <table border="1" id="tabelaUsuarios">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Lista vai aparecer aqui apenas após cadastro -->
-        </tbody>
-    </table>
+<h1>Cadastro de Usuário</h1>
+<form id="formUsuario">
+    <input type="text" id="nomeUsuario" placeholder="Nome" required>
+    <input type="email" id="emailUsuario" placeholder="Email" required>
+    <input type="password" id="senhaUsuario" placeholder="Senha" required>
+    <button type="submit">Cadastrar Usuário</button>
+</form>
+<div id="mensagemUsuario"></div>
 
-    <h2>Editar Usuário</h2>
-    <form id="formEditarUsuario">
-        <input type="number" id="editarId" placeholder="ID do Usuário" required>
-        <input type="text" id="editarNome" placeholder="Novo Nome">
-        <input type="email" id="editarEmail" placeholder="Novo Email">
-        <input type="text" id="editarSenha" placeholder="Nova Senha">
-        <button type="submit">Editar</button>
-    </form>
-    <div id="mensagemEditar"></div>
+<h2>Usuários Cadastrados</h2>
+<table id="tabelaUsuarios">
+    <thead>
+        <tr><th>ID</th><th>Nome</th><th>Email</th></tr>
+    </thead>
+    <tbody></tbody>
+</table>
 
-    <h2>Deletar Usuário</h2>
-    <form id="formDeletarUsuario">
-        <input type="number" id="deletarId" placeholder="ID do Usuário" required>
-        <button type="submit">Deletar</button>
-    </form>
-    <div id="mensagemDeletar"></div>
+<h1>Cadastro de Pet</h1>
+<form id="formPet">
+    <input type="text" id="nomePet" placeholder="Nome do Pet" required>
+    <input type="text" id="especie" placeholder="Espécie" required>
+    <input type="text" id="raca" placeholder="Raça" required>
+    <input type="text" id="idade" placeholder="Idade" required>
+    <input type="number" id="usuarioId" placeholder="ID do Usuário" required>
+    <button type="submit">Cadastrar Pet</button>
+</form>
+<div id="mensagemPet"></div>
 
-    <script>
-const baseURL = "http://192.168.1.145:5000";
-        // ========== CADASTRAR USUÁRIO ==========
-        document.getElementById("formUsuario").addEventListener("submit", e => {
-            e.preventDefault();
-            const nome = document.getElementById("nomeUsuario").value;
-            const email = document.getElementById("emailUsuario").value;
-            const senha = document.getElementById("senhaUsuario").value;
+<h2>Pets cadastrados</h2>
+<table id="tabelaPets">
+    <thead>
+        <tr><th>ID</th><th>Nome</th><th>Espécie</th><th>Raça</th><th>Idade</th><th>ID do Usuário</th></tr>
+    </thead>
+    <tbody></tbody>
+</table>
 
-            fetch(`${baseURL}/cadastro_usuario`, {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({nome, email, senha})
-            })
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById("mensagemUsuario").innerText = data.mensagem || data.erro;
-                listarUsuarios(); // Preenche a lista após cadastrar
+<script>
+const baseURL = "http://127.0.0.1:5000";
+
+// ================== USUÁRIOS ==================
+document.getElementById("formUsuario").addEventListener("submit", e => {
+    e.preventDefault();
+    const nome = document.getElementById("nomeUsuario").value;
+    const email = document.getElementById("emailUsuario").value;
+    const senha = document.getElementById("senhaUsuario").value;
+
+    fetch(`${baseURL}/cadastro_usuario`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({nome, email, senha})
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("mensagemUsuario").innerText = data.mensagem || data.erro;
+        listarUsuarios();
+    });
+});
+
+function listarUsuarios() {
+    fetch(`${baseURL}/listar_usuarios`)
+        .then(res => res.json())
+        .then(usuarios => {
+            const tbody = document.getElementById("tabelaUsuarios").getElementsByTagName("tbody")[0];
+            tbody.innerHTML = "";
+            usuarios.forEach(u => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `<td>${u.id}</td><td>${u.nome}</td><td>${u.email}</td>`;
+                tbody.appendChild(tr);
             });
         });
+}
 
-        // ========== LISTAR USUÁRIOS ==========
-        function listarUsuarios() {
-            fetch(`${baseURL}/listar_usuarios`)
-            .then(res => res.json())
-            .then(usuarios => {
-                const tbody = document.getElementById("tabelaUsuarios").querySelector("tbody");
-                tbody.innerHTML = ""; // limpa a tabela antes
-                usuarios.forEach(usuario => {
-                    const tr = document.createElement("tr");
-                    tr.innerHTML = `
-                        <td>${usuario.id}</td>
-                        <td>${usuario.nome}</td>
-                        <td>${usuario.email}</td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            });
-        }
+// ================== PETS ==================
+document.getElementById("formPet").addEventListener("submit", e => {
+    e.preventDefault();
+    const usuario_id = document.getElementById("usuarioId").value;
+    const nome = document.getElementById("nomePet").value;
+    const especie = document.getElementById("especie").value;
+    const raca = document.getElementById("raca").value;
+    const idade = document.getElementById("idade").value;
 
-        // ========== EDITAR USUÁRIO ==========
-        document.getElementById("formEditarUsuario").addEventListener("submit", e => {
-            e.preventDefault();
-            const id = document.getElementById("editarId").value;
-            const nome = document.getElementById("editarNome").value;
-            const email = document.getElementById("editarEmail").value;
-            const senha = document.getElementById("editarSenha").value;
+    fetch(`${baseURL}/cadastrar_pet`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({usuario_id, nome, especie, raca, idade})
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("mensagemPet").innerText = data.mensagem || data.erro;
+        listarPets(usuario_id);
+    });
+});
 
-            fetch(`${baseURL}/editar_usuario/${id}`, {
-                method: "PUT",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({nome, email, senha})
-            })
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById("mensagemEditar").innerText = data.mensagem || data.erro;
-                listarUsuarios(); // Atualiza lista após editar
+function listarPets(usuario_id) {
+    fetch(`${baseURL}/listar_pets/${usuario_id}`)
+        .then(res => res.json())
+        .then(pets => {
+            const tbody = document.getElementById("tabelaPets").getElementsByTagName("tbody")[0];
+            tbody.innerHTML = "";
+            pets.forEach(p => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `<td>${p.id}</td><td>${p.nome}</td><td>${p.especie}</td><td>${p.raca}</td><td>${p.idade}</td><td>${p.usuario_id}</td>`;
+                tbody.appendChild(tr);
             });
         });
+}
 
-        // ========== DELETAR USUÁRIO ==========
-        document.getElementById("formDeletarUsuario").addEventListener("submit", e => {
-            e.preventDefault();
-            const id = document.getElementById("deletarId").value;
+// Carrega usuários ao abrir a página
+window.onload = function() {
+    listarUsuarios();
+};
+</script>
 
-            fetch(`${baseURL}/deletar_usuario/${id}`, {
-                method: "DELETE"
-            })
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById("mensagemDeletar").innerText = data.mensagem || data.erro;
-                listarUsuarios(); // Atualiza lista após deletar
-            });
-        });
-    </script>
 </body>
 </html>
