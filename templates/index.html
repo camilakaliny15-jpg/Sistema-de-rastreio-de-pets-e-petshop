@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD Usuários e Pets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+            max-width: 400px;
+        }
+
+        input, button {
+            margin: 5px 0;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        table, th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cadastro de Usuário</h1>
+    <form id="formUsuario">
+        <input type="text" id="nomeUsuario" placeholder="Nome" required>
+        <input type="email" id="emailUsuario" placeholder="Email" required>
+        <input type="password" id="senhaUsuario" placeholder="Senha" required>
+        <button type="submit">Cadastrar Usuário</button>
+    </form>
+    <div id="mensagemUsuario"></div>
+
+    <h2>Usuários Cadastrados</h2>
+    <table border="1" id="tabelaUsuarios">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Lista vai aparecer aqui apenas após cadastro -->
+        </tbody>
+    </table>
+
+    <h2>Editar Usuário</h2>
+    <form id="formEditarUsuario">
+        <input type="number" id="editarId" placeholder="ID do Usuário" required>
+        <input type="text" id="editarNome" placeholder="Novo Nome">
+        <input type="email" id="editarEmail" placeholder="Novo Email">
+        <input type="text" id="editarSenha" placeholder="Nova Senha">
+        <button type="submit">Editar</button>
+    </form>
+    <div id="mensagemEditar"></div>
+
+    <h2>Deletar Usuário</h2>
+    <form id="formDeletarUsuario">
+        <input type="number" id="deletarId" placeholder="ID do Usuário" required>
+        <button type="submit">Deletar</button>
+    </form>
+    <div id="mensagemDeletar"></div>
+
+    <script>
+const baseURL = "http://192.168.1.145:5000";
+        // ========== CADASTRAR USUÁRIO ==========
+        document.getElementById("formUsuario").addEventListener("submit", e => {
+            e.preventDefault();
+            const nome = document.getElementById("nomeUsuario").value;
+            const email = document.getElementById("emailUsuario").value;
+            const senha = document.getElementById("senhaUsuario").value;
+
+            fetch(`${baseURL}/cadastro_usuario`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({nome, email, senha})
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("mensagemUsuario").innerText = data.mensagem || data.erro;
+                listarUsuarios(); // Preenche a lista após cadastrar
+            });
+        });
+
+        // ========== LISTAR USUÁRIOS ==========
+        function listarUsuarios() {
+            fetch(`${baseURL}/listar_usuarios`)
+            .then(res => res.json())
+            .then(usuarios => {
+                const tbody = document.getElementById("tabelaUsuarios").querySelector("tbody");
+                tbody.innerHTML = ""; // limpa a tabela antes
+                usuarios.forEach(usuario => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>${usuario.id}</td>
+                        <td>${usuario.nome}</td>
+                        <td>${usuario.email}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            });
+        }
+
+        // ========== EDITAR USUÁRIO ==========
+        document.getElementById("formEditarUsuario").addEventListener("submit", e => {
+            e.preventDefault();
+            const id = document.getElementById("editarId").value;
+            const nome = document.getElementById("editarNome").value;
+            const email = document.getElementById("editarEmail").value;
+            const senha = document.getElementById("editarSenha").value;
+
+            fetch(`${baseURL}/editar_usuario/${id}`, {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({nome, email, senha})
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("mensagemEditar").innerText = data.mensagem || data.erro;
+                listarUsuarios(); // Atualiza lista após editar
+            });
+        });
+
+        // ========== DELETAR USUÁRIO ==========
+        document.getElementById("formDeletarUsuario").addEventListener("submit", e => {
+            e.preventDefault();
+            const id = document.getElementById("deletarId").value;
+
+            fetch(`${baseURL}/deletar_usuario/${id}`, {
+                method: "DELETE"
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("mensagemDeletar").innerText = data.mensagem || data.erro;
+                listarUsuarios(); // Atualiza lista após deletar
+            });
+        });
+    </script>
+</body>
+</html>
