@@ -30,8 +30,27 @@ A ideia central é permitir que usuários cadastrem animais perdidos, visualizem
 ---
 
 ## 📂 Estrutura do Projeto
-/frontend ├── index.html ├── estilos/ ├── imagens/ └── README.md
-/backend ├── app.py ├── templates/ ├── requirements.txt ├── pets_perdidos.sql └── README.md
+/frontend 
+
+├── index.html
+
+├── estilos/ 
+
+├── imagens/
+
+└── README.md
+
+/backend 
+
+├── app.py
+
+├── templates/ 
+
+├── requirements.txt 
+
+├── pets_perdidos.sql 
+
+└── README.md
 README.md (este arquivo)
 
 - **Frontend** → Parte visual e páginas do site  
