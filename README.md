@@ -32,12 +32,36 @@ A ideia central é permitir que usuários cadastrem animais perdidos, visualizem
 ## 📂 Estrutura do Projeto
 /frontend 
 
+/frontend
 ├── index.html
 
-├── estilos/ 
+├── estilos/
 
-├── imagens/
+│   ├── Cadastro.css
 
+│   ├── Login.css
+
+│   └── Pagina.css
+
+│
+├── scripts/
+
+│   ├── Cadastro.js
+
+│   ├── Login.js
+
+│   └── Pagina.js
+
+│
+├── paginas/
+
+│   ├── CadastroPet/
+
+│   ├── Login/
+
+│   └── Pagina Principal/
+
+│
 └── README.md
 
 /backend 
@@ -51,6 +75,7 @@ A ideia central é permitir que usuários cadastrem animais perdidos, visualizem
 ├── pets_perdidos.sql 
 
 └── README.md
+
 README.md (este arquivo)
 
 - **Frontend** → Parte visual e páginas do site  
