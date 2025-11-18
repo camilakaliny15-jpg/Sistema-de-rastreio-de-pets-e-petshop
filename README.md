@@ -87,12 +87,16 @@ http://127.0.0.1:5000
 ### ⭐ Possíveis Melhorias Futuras
 
 • Implementar uma API externa (ex: mapas, clima ou localização)
+
 • Melhorar o layout geral
+
 • Criar área administrativa
 
 ### 👩‍💻 Desenvolvido por
 Lucas Barroso
+
 Camila Kaliny 
+
 Maria Clara 
 
 
